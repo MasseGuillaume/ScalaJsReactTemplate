@@ -35,24 +35,18 @@ object StuffView {
   private val StuffSearch = ReactComponentB[(String, Backend)]("StuffSearch")
   private val StuffSideBar = ReactComponentB[Stuff]("StuffSideBar")
     .render_P ( stuff =>
-      div(stuff.z)
+      div(stuff.z.toString())
     )
     .build
 
   private class Backend($: BackendScope[Unit, Option[Stuff]]) {
-    def render(a: Option[(Stuff, Option[String])]) = {
+    def render(a: Option[Stuff]) = {
       a match {
-        case Some((stuff, Some(markdown))) => 
+        case Some(stuff) => 
           div(Style.container)(
             div(Style.stuff)("stuff"),
             div(Style.side)(StuffSideBar(stuff))
           )
-
-        case Some((stuff, None)) =>
-          div(Style.container)(
-            div(Style.side)(StuffSideBar(stuff))
-          )
-
         case None => div("not found")
       }
     }

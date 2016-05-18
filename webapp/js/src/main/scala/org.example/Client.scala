@@ -11,7 +11,7 @@ import japgolly.scalajs.react.extra.router._
 
 sealed trait Page
 case object Home extends Page
-case class MiscPage(a: String, b: String) extends Page
+case class StuffPage(a: String, b: String) extends Page
 
 object Client extends JSApp {
   val routerConfig = RouterConfigDsl[Page].buildConfig { dsl =>
@@ -21,8 +21,8 @@ object Client extends JSApp {
 
     (trimSlashes 
     | staticRoute(root, Home) ~> render(HomeView())
-    | dynamicRouteCT(("misc" / part / part).caseClass[MiscPage]) ~> 
-        dynRender(MiscView.component(_))
+    | dynamicRouteCT(("stuff" / part / part).caseClass[StuffPage]) ~> 
+        dynRender(StuffView.component(_))
     )
       .notFound(redirectToPage(Home)(Redirect.Replace))
       .renderWith(layout)
