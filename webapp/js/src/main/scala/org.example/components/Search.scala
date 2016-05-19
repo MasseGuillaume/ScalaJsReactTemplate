@@ -80,11 +80,18 @@ object Search {
   private[Search] class Backend($: BackendScope[Unit, (SearchState, RouterCtl[Page])]) {
     def onTextChange(e: ReactEventI) = {
       e.extract(_.target.value)(value =>
-        Callback.future {
-          AutowireClient[Api].find(value).call().map( stuffs => 
-            $.modState{ case (_, ctl) => (SearchState(value, stuffs), ctl)}
-          )
-        }
+        for {
+          _ <- $.modState{ case (SearchState(_, stuffs), ctl) => 
+            (SearchState(value, stuffs), ctl)
+          }
+          _ <- Callback.future {
+            AutowireClient[Api].find(value).call().map(stuffs => 
+              $.modState{ case (SearchState(query, _), ctl) => 
+                (SearchState(query, stuffs), ctl)
+              }
+            )
+          }
+        } yield ()
       )
     }
 
