@@ -1,0 +1,4 @@
+# ScalaJsReactTemplate
+
+$ sbt
+> reStart/webappJVM
