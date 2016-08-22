@@ -3,4 +3,5 @@
 ```
 $ sbt
 > reStart/webappJVM
+> ~ products
 ```
