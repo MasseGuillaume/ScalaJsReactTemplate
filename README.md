@@ -2,6 +2,7 @@
 
 ```
 $ sbt
-> reStart/webappJVM
+> project webappJVM
+> reStart
 > ~ products
 ```
